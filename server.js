@@ -171,6 +171,23 @@ function serveStatic(request, response, pathname) {
 
     fs.readFile(filePath, (error, content) => {
         if (error) {
+            if (path.extname(filePath).toLowerCase() === ".html") {
+                fs.readFile(path.join(ROOT, "login.html"), (fallbackError, fallbackContent) => {
+                    if (fallbackError) {
+                        response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+                        response.end("Página não encontrada.");
+                        return;
+                    }
+
+                    response.writeHead(200, {
+                        "Content-Type": mimeTypes[".html"],
+                        "Cache-Control": "no-store"
+                    });
+                    response.end(fallbackContent);
+                });
+                return;
+            }
+
             response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
             response.end("Página não encontrada.");
             return;
@@ -179,7 +196,7 @@ function serveStatic(request, response, pathname) {
         const extension = path.extname(filePath).toLowerCase();
         response.writeHead(200, {
             "Content-Type": mimeTypes[extension] || "application/octet-stream",
-            "Cache-Control": extension === ".html" ? "no-cache" : "public, max-age=3600"
+            "Cache-Control": extension === ".html" ? "no-store" : "public, max-age=3600"
         });
         response.end(content);
     });
