@@ -492,16 +492,16 @@
             position: absolute;
             right: 18px;
             bottom: 18px;
-            width: min(330px, calc(100% - 36px));
-            padding: 18px;
+            width: min(270px, calc(100% - 36px));
+            padding: 14px;
             border: 1px solid var(--line);
             border-radius: 8px;
-            background: rgba(8, 9, 9, 0.82);
+            background: rgba(8, 9, 9, 0.58);
             backdrop-filter: blur(16px);
         }
 
         body.light-theme .training-card {
-            background: rgba(255, 255, 255, 0.84);
+            background: rgba(255, 255, 255, 0.68);
         }
 
         .training-card h2 {
@@ -1742,8 +1742,8 @@
             .training-card {
                 right: 12px;
                 bottom: 12px;
-                width: calc(100% - 24px);
-                padding: 14px;
+                width: min(250px, calc(100% - 24px));
+                padding: 12px;
             }
 
             .training-row {
