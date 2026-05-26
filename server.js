@@ -160,10 +160,10 @@ async function handleApi(request, response, pathname) {
 }
 
 function serveStatic(request, response, pathname) {
-    const requestedPath = pathname === "/" ? "/login.html" : pathname;
-    const filePath = path.normalize(path.join(ROOT, requestedPath));
+    const requestedPath = pathname === "/" ? "login.html" : pathname.replace(/^\/+/, "");
+    const filePath = path.resolve(ROOT, requestedPath);
 
-    if (!filePath.startsWith(ROOT)) {
+    if (!filePath.startsWith(ROOT + path.sep) && filePath !== ROOT) {
         response.writeHead(403);
         response.end("Acesso negado.");
         return;
