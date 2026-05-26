@@ -1742,13 +1742,25 @@
             .training-card {
                 right: 12px;
                 bottom: 12px;
-                width: min(250px, calc(100% - 24px));
-                padding: 12px;
+                width: min(205px, calc(100% - 24px));
+                padding: 10px;
+                backdrop-filter: blur(10px);
+            }
+
+            .training-card h2 {
+                margin-bottom: 6px;
+                font-size: 0.86rem;
             }
 
             .training-row {
                 display: grid;
                 gap: 2px;
+                padding: 6px 0;
+                font-size: 0.78rem;
+            }
+
+            .training-row strong {
+                font-size: 0.84rem;
             }
 
             .about-main,
