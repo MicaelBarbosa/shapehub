@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShapeHub - Treinos inteligentes para sua rotina</title>
+    <script>
+        if (sessionStorage.getItem("shapehubSessionActive") !== "true") {
+            window.location.replace("login.html");
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css?v=9">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="logo" href="#inicio">Shape<span>Hub</span></a>
+            <nav class="nav-links" aria-label="Navegação principal">
+                <a href="#inicio">Início</a>
+                <a href="#sobre">Sobre</a>
+                <a href="#painel">Painel</a>
+                <a href="#metodo">Método</a>
+                <a href="#montar">Montar treino</a>
+                <a href="meu-treino.html">Meu treino</a>
+            </nav>
+            <div class="header-actions">
+                <button class="btn btn-secondary" type="button" data-login data-auth-guest>Entrar</button>
+                <button class="btn btn-primary" type="button" data-scroll-target="montar" data-auth-guest>Começar</button>
+                <span class="welcome-message" data-auth-user>Bem-vindo, <strong data-auth-user-name>usuário</strong></span>
+                <button class="btn btn-secondary logout-button" type="button" data-logout>Sair</button>
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Alternar tema"></button>
+                <a class="profile-avatar-link" href="perfil.html" aria-label="Abrir perfil do usuário">MS</a>
+            </div>
+        </header>
+
+        <main>
+            <section id="inicio" class="hero">
+                <div>
+                    <p class="eyebrow">Treino personalizado em minutos</p>
+                    <h1>Seu plano de academia com mais clareza, ritmo e resultado.</h1>
+                    <p class="hero-copy">
+                        O ShapeHub organiza objetivo, nível e frequência para sugerir uma rotina simples de seguir, com evolução semanal e foco no que importa.
+                    </p>
+                    <div class="benefit-list" aria-label="Benefícios principais">
+                        <span class="benefit-pill"><strong>Sem complicação</strong> para iniciantes</span>
+                        <span class="benefit-pill"><strong>Divisão semanal</strong> clara</span>
+                        <span class="benefit-pill"><strong>Orientação</strong> de intensidade</span>
+                    </div>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" type="button" data-scroll-target="montar">Criar treino grátis</button>
+                        <button class="btn btn-secondary" type="button" data-scroll-target="treinos">Ver como funciona</button>
+                    </div>
+                    <div class="hero-stats" aria-label="Resultados do ShapeHub">
+                        <div class="stat">
+                            <strong>4x</strong>
+                            <span>rotinas por semana</span>
+                        </div>
+                        <div class="stat">
+                            <strong>12</strong>
+                            <span>semanas de evolução</span>
+                        </div>
+                        <div class="stat">
+                            <strong>100%</strong>
+                            <span>adaptado ao objetivo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-media" aria-label="Pessoa treinando em academia">
+                    <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1200&q=85" alt="Pessoa treinando em academia">
+                    <div class="training-card">
+                        <h2>Treino de hoje</h2>
+                        <div class="training-row">
+                            <span>Grupo muscular</span>
+                            <strong>Peito e tríceps</strong>
+                        </div>
+                        <div class="training-row">
+                            <span>Duração</span>
+                            <strong>48 min</strong>
+                        </div>
+                        <div class="training-row">
+                            <span>Intensidade</span>
+                            <strong>Moderada</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sobre" class="about-section">
+                <div class="section-heading">
+                    <h2 class="section-title">Sobre o <span>ShapeHub</span>.</h2>
+                    <p>O ShapeHub é um projeto acadêmico pensado para simular uma plataforma simples de organização de treinos.</p>
+                </div>
+                <div class="about-layout">
+                    <article class="about-main">
+                        <p class="eyebrow">Proposta do site</p>
+                        <h3>Transformar informações básicas em uma rotina de treino mais clara.</h3>
+                        <p>
+                            O site ajuda o usuário a organizar objetivo, nível, disponibilidade e local de treino. A partir dessas informações, ele gera uma sugestão de rotina, permite salvar o treino e centraliza dados importantes no perfil.
+                        </p>
+                    </article>
+                    <div class="about-grid">
+                        <article class="about-card">
+                            <span class="method-icon">01</span>
+                            <h3>Público-alvo</h3>
+                            <p>Pessoas que estão iniciando, voltando a treinar ou procurando uma forma mais organizada de acompanhar a rotina na academia ou em casa.</p>
+                        </article>
+                        <article class="about-card">
+                            <span class="method-icon">02</span>
+                            <h3>Funcionalidade</h3>
+                            <p>O simulador cria uma divisão semanal com exercícios, séries, repetições e adaptação por nível e local do treino.</p>
+                        </article>
+                        <article class="about-card">
+                            <span class="method-icon">03</span>
+                            <h3>Experiência</h3>
+                            <p>O usuário pode personalizar perfil, salvar treino, acompanhar metas, alterar tema e consultar a rotina em uma página própria.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section id="painel" class="dashboard-section">
+                <div class="section-heading">
+                    <h2 class="section-title">Seu painel rápido no <span>ShapeHub</span>.</h2>
+                    <p>Acesse as partes principais do sistema sem depender do login por enquanto.</p>
+                </div>
+                <div class="dashboard-grid">
+                    <article class="dashboard-card">
+                        <span class="method-icon">01</span>
+                        <h3>Perfil do usuário</h3>
+                        <p>Veja dados pessoais, metas, histórico de evolução e foto do usuário.</p>
+                        <a class="btn btn-secondary" href="perfil.html">Abrir perfil</a>
+                    </article>
+                    <article class="dashboard-card featured-dashboard">
+                        <span class="method-icon">02</span>
+                        <h3>Treino atual</h3>
+                        <p>Depois de gerar uma rotina, salve o plano e acompanhe em uma página própria.</p>
+                        <a class="btn btn-primary" href="meu-treino.html">Ver meu treino</a>
+                    </article>
+                    <article class="dashboard-card">
+                        <span class="method-icon">03</span>
+                        <h3>Gerador inteligente</h3>
+                        <p>Monte uma sugestão com objetivo, nível, tempo disponível e local do treino.</p>
+                        <button class="btn btn-secondary" type="button" data-scroll-target="montar">Montar agora</button>
+                    </article>
+                </div>
+            </section>
+
+            <section id="treinos">
+                <div class="section-heading">
+                    <h2 class="section-title">Uma jornada simples do perfil ao <span>progresso</span>.</h2>
+                    <p>O fluxo foi pensado para um projeto acadêmico parecer produto real: direto, responsivo e com etapas claras.</p>
+                </div>
+                <div class="steps-grid">
+                    <article class="card">
+                        <span class="card-number">1</span>
+                        <h3>Perfil</h3>
+                        <p>Informe nível, rotina e disponibilidade para o plano respeitar seu contexto.</p>
+                    </article>
+                    <article class="card">
+                        <span class="card-number">2</span>
+                        <h3>Objetivo</h3>
+                        <p>Escolha entre hipertrofia, emagrecimento ou condicionamento físico.</p>
+                    </article>
+                    <article class="card">
+                        <span class="card-number">3</span>
+                        <h3>Treino</h3>
+                        <p>Receba uma divisão semanal objetiva com foco no seu nível atual.</p>
+                    </article>
+                    <article class="card">
+                        <span class="card-number">4</span>
+                        <h3>Evolução</h3>
+                        <p>Acompanhe frequência, cargas e ajustes para evoluir com consistência.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="metodo" class="method">
+                <div class="section-heading">
+                    <h2 class="section-title">Como o ShapeHub transforma respostas em <span>rotina</span>.</h2>
+                    <p>A página explica a lógica do produto antes de pedir cadastro, deixando o projeto mais claro para quem avalia.</p>
+                </div>
+                <div class="method-grid">
+                    <article class="method-card">
+                        <span class="method-icon">01</span>
+                        <h3>Objetivo define prioridade</h3>
+                        <p>Hipertrofia prioriza musculação, emagrecimento combina força e cardio, e condicionamento equilibra mobilidade e resistência.</p>
+                    </article>
+                    <article class="method-card">
+                        <span class="method-icon">02</span>
+                        <h3>Nível ajusta volume</h3>
+                        <p>O treino muda a quantidade de séries, pausas e intensidade conforme iniciante, intermediário ou avançado.</p>
+                    </article>
+                    <article class="method-card">
+                        <span class="method-icon">03</span>
+                        <h3>Frequência organiza a semana</h3>
+                        <p>Com 3, 4 ou 5 dias, a divisão fica realista e evita concentrar grupos musculares demais em um único treino.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="montar" class="builder">
+                <div class="builder-panel">
+                    <p class="eyebrow">Monte agora</p>
+                    <h2 class="section-title">Simule seu <span>treino ideal</span>.</h2>
+                    <p class="helper-text">Escolha as opções abaixo para ver uma sugestão instantânea. O resultado muda conforme objetivo, nível e quantidade de dias.</p>
+                    <form class="builder-form" id="workoutForm">
+                        <div class="field">
+                            <label for="goal">Objetivo</label>
+                            <select id="goal" required>
+                                <option value="hipertrofia">Ganhar massa muscular</option>
+                                <option value="emagrecimento">Emagrecer</option>
+                                <option value="condicionamento">Melhorar condicionamento</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="level">Nível</label>
+                            <select id="level" required>
+                                <option value="iniciante">Iniciante</option>
+                                <option value="intermediario">Intermediário</option>
+                                <option value="avancado">Avançado</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="days">Dias por semana</label>
+                            <select id="days" required>
+                                <option value="3">3 dias</option>
+                                <option value="4" selected>4 dias</option>
+                                <option value="5">5 dias</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="profile">Perfil</label>
+                            <select id="profile" required>
+                                <option value="iniciante" selected>Primeiro passo</option>
+                                <option value="retorno">Retomada</option>
+                                <option value="experiente">Evolução constante</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="duration">Tempo por treino</label>
+                            <select id="duration" required>
+                                <option value="30">30 minutos</option>
+                                <option value="45" selected>45 minutos</option>
+                                <option value="60">60 minutos</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="place">Local do treino</label>
+                            <select id="place" required>
+                                <option value="academia" selected>Academia</option>
+                                <option value="casa">Casa</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Gerar sugestão</button>
+                    </form>
+                </div>
+                <div class="builder-panel result-box" id="workoutResult" aria-live="polite">
+                    <div class="progress-strip" aria-label="Etapas do plano">
+                        <span>1. Perfil</span>
+                        <span>2. Objetivo</span>
+                        <span>3. Rotina</span>
+                    </div>
+                    <div class="result-summary">
+                        <div class="summary-item">
+                            <span>Objetivo</span>
+                            <strong>Hipertrofia</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Nível</span>
+                            <strong>Iniciante</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Frequência</span>
+                            <strong>3 dias</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Tempo</span>
+                            <strong>45 min</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Local</span>
+                            <strong>Academia</strong>
+                        </div>
+                    </div>
+                    <div class="plan-insight">
+                        <strong>Leitura do plano</strong>
+                        <p>Rotina equilibrada para criar consistência, com volume moderado e exercícios fáceis de acompanhar.</p>
+                    </div>
+                    <article class="workout-day">
+                        <h3>Dia 1</h3>
+                        <p>Peito, ombros e tríceps com foco em movimentos compostos.</p>
+                        <ul>
+                            <li>Supino reto - 3 séries</li>
+                            <li>Desenvolvimento - 3 séries</li>
+                            <li>Tríceps pulley - 3 séries</li>
+                        </ul>
+                    </article>
+                    <article class="workout-day">
+                        <h3>Dia 2</h3>
+                        <p>Costas e bíceps com progressão de carga controlada.</p>
+                        <ul>
+                            <li>Puxada frontal - 3 séries</li>
+                            <li>Remada baixa - 3 séries</li>
+                            <li>Rosca direta - 3 séries</li>
+                        </ul>
+                    </article>
+                    <article class="workout-day">
+                        <h3>Dia 3</h3>
+                        <p>Pernas completas e core para estabilidade.</p>
+                        <ul>
+                            <li>Agachamento guiado - 3 séries</li>
+                            <li>Mesa flexora - 3 séries</li>
+                            <li>Prancha - 3 rodadas</li>
+                        </ul>
+                    </article>
+                    <p class="workout-note">Use a sugestão como base acadêmica do projeto. Na vida real, treino deve respeitar orientação profissional e limites individuais.</p>
+                    <div class="result-actions">
+                        <button class="btn btn-primary" type="button" data-save-workout>Salvar no meu perfil</button>
+                        <a class="btn btn-secondary" href="meu-treino.html">Ver meu treino</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="planos">
+                <div class="section-heading">
+                    <h2 class="section-title">Planos para cada <span>fase</span>.</h2>
+                    <p>Preços fictícios para deixar a apresentação mais completa e convincente.</p>
+                </div>
+                <div class="plans-grid">
+                    <article class="plan">
+                        <h3>Start</h3>
+                        <p>Para começar sem complicar.</p>
+                        <div class="price">Grátis</div>
+                        <ul>
+                            <li>Simulador de treino</li>
+                            <li>Rotina de 3 dias</li>
+                            <li>Dicas essenciais</li>
+                        </ul>
+                        <button class="btn btn-secondary" type="button" data-scroll-target="montar">Experimentar</button>
+                    </article>
+                    <article class="plan featured">
+                        <h3>Pro</h3>
+                        <p>Para treinar com acompanhamento.</p>
+                        <div class="price">R$ 19<small>/mês</small></div>
+                        <ul>
+                            <li>Planos de 4 a 5 dias</li>
+                            <li>Controle de progresso</li>
+                            <li>Ajuste por objetivo</li>
+                        </ul>
+                        <button class="btn btn-primary" type="button" data-login>Criar conta</button>
+                    </article>
+                    <article class="plan">
+                        <h3>Coach</h3>
+                        <p>Para quem quer suporte completo.</p>
+                        <div class="price">R$ 49<small>/mês</small></div>
+                        <ul>
+                            <li>Histórico de evolução</li>
+                            <li>Relatórios semanais</li>
+                            <li>Contato com treinador</li>
+                        </ul>
+                        <button class="btn btn-secondary" type="button" data-login>Entrar</button>
+                    </article>
+                </div>
+            </section>
+
+            <section id="dicas">
+                <div class="section-heading">
+                    <h2 class="section-title">Dicas para treinar com mais <span>segurança</span>.</h2>
+                    <p>Conteúdo curto e útil para deixar a página mais rica sem virar um texto gigante.</p>
+                </div>
+                <div class="tips-grid">
+                    <article class="tip">
+                        <span class="tip-tag">Antes do treino</span>
+                        <h3>Aqueça antes de aumentar carga</h3>
+                        <p>Comece com séries leves e prepare articulações e músculos para o treino principal.</p>
+                    </article>
+                    <article class="tip">
+                        <span class="tip-tag">Durante</span>
+                        <h3>Priorize execução</h3>
+                        <p>Movimento bem feito vale mais do que peso alto sem controle.</p>
+                    </article>
+                    <article class="tip">
+                        <span class="tip-tag">Depois</span>
+                        <h3>Registre sua evolução</h3>
+                        <p>Anote cargas, repetições e sensações para ajustar o treino com inteligência.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="faq">
+                <div class="section-heading">
+                    <h2 class="section-title">Perguntas que deixam o projeto mais <span>completo</span>.</h2>
+                    <p>Uma área de FAQ ajuda o visitante a entender limites, proposta e funcionamento do ShapeHub.</p>
+                </div>
+                <div class="faq-grid">
+                    <article class="faq-item">
+                        <h3>O ShapeHub substitui um personal trainer?</h3>
+                        <p>Não. A proposta é organizar uma sugestão inicial de treino. Acompanhamento profissional continua sendo recomendado.</p>
+                    </article>
+                    <article class="faq-item">
+                        <h3>Posso usar sendo iniciante?</h3>
+                        <p>Sim. O nível iniciante reduz volume e prioriza movimentos básicos para construir consistência.</p>
+                    </article>
+                    <article class="faq-item">
+                        <h3>Os planos são reais?</h3>
+                        <p>Neste projeto, os planos são demonstrativos para simular uma experiência completa de produto.</p>
+                    </article>
+                    <article class="faq-item">
+                        <h3>Por que informar dias por semana?</h3>
+                        <p>Porque a frequência muda a divisão dos grupos musculares e torna a rotina mais realista.</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 ShapeHub - Projeto acadêmico</p>
+            <p>Treinos personalizados para uma rotina mais consistente.</p>
+        </footer>
+    </div>
+    <button class="back-to-top" type="button" data-back-to-top onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Voltar ao início">↑</button>
+    <script src="js/script.js?v=8"></script>
+</body>
+</html>
+
+

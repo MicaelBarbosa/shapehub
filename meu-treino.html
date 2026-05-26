@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Treino - ShapeHub</title>
+    <link rel="stylesheet" href="css/style.css?v=9">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="logo" href="index.html#inicio">Shape<span>Hub</span></a>
+            <nav class="nav-links" aria-label="Navegação principal">
+                <a href="index.html#inicio">Início</a>
+                <a href="index.html#painel">Painel</a>
+                <a href="index.html#montar">Montar treino</a>
+                <a href="perfil.html">Perfil</a>
+                <a href="meu-treino.html">Meu treino</a>
+            </nav>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="index.html#montar">Novo treino</a>
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Alternar tema"></button>
+                <a class="profile-avatar-link" href="perfil.html" aria-label="Abrir perfil do usuário">MS</a>
+            </div>
+        </header>
+
+        <main>
+            <section class="workout-page">
+                <div class="section-heading">
+                    <h1 class="section-title">Meu treino <span>salvo</span>.</h1>
+                    <p>A rotina salva no simulador aparece aqui para consulta rápida durante a semana.</p>
+                </div>
+                <div class="saved-workout-shell" id="savedWorkoutView" aria-live="polite">
+                    <article class="empty-workout">
+                        <p class="eyebrow">Nenhum treino salvo</p>
+                        <h2>Gere uma rotina para preencher esta página.</h2>
+                        <p>Use o simulador da página inicial e clique em salvar para transformar a sugestão no seu treino atual.</p>
+                        <a class="btn btn-primary" href="index.html#montar">Montar treino</a>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 ShapeHub - Projeto acadêmico</p>
+            <p><a href="index.html#inicio">Voltar para a página inicial</a></p>
+        </footer>
+    </div>
+    <button class="back-to-top" type="button" data-back-to-top onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Voltar ao início">↑</button>
+    <script src="js/script.js?v=8"></script>
+</body>
+</html>
+

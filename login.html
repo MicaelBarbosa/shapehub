@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - ShapeHub</title>
+    <link rel="stylesheet" href="css/style.css?v=9">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="logo" href="index.html#inicio">Shape<span>Hub</span></a>
+            <div class="header-actions">
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Alternar tema"></button>
+            </div>
+        </header>
+
+        <main>
+            <section class="login-page">
+                <div class="login-intro">
+                    <p class="eyebrow">Acesso do usuário</p>
+                    <h1>Entre para acompanhar seu treino, metas e progresso.</h1>
+                    <p>Esta tela simula o acesso ao ShapeHub. Os dados são salvos apenas no navegador para fins acadêmicos.</p>
+                    <div class="login-benefits">
+                        <span>Perfil personalizado</span>
+                        <span>Treino salvo</span>
+                        <span>Metas acompanhadas</span>
+                    </div>
+                </div>
+
+                <article class="login-card">
+                    <div class="login-tabs" aria-label="Tipo de acesso">
+                        <button class="active" type="button" data-auth-tab="login" onclick="setAuthMode('login')">Entrar</button>
+                        <button type="button" data-auth-tab="register" onclick="setAuthMode('register')">Criar conta</button>
+                    </div>
+
+                    <form class="auth-form" id="authForm">
+                        <div class="field auth-name-field">
+                            <label for="authName">Nome</label>
+                            <input id="authName" type="text" placeholder="Seu nome" autocomplete="name" required>
+                        </div>
+                        <div class="field">
+                            <label for="authEmail">E-mail</label>
+                            <input id="authEmail" type="email" placeholder="voce@email.com" autocomplete="email" required>
+                        </div>
+                        <div class="field">
+                            <label for="authPassword">Senha</label>
+                            <input id="authPassword" type="password" placeholder="Digite sua senha" autocomplete="current-password" required>
+                        </div>
+                        <p class="auth-message" id="authMessage">Use qualquer e-mail e senha para simular o acesso.</p>
+                        <button class="btn btn-primary" type="submit" id="authSubmit">Entrar</button>
+                    </form>
+                </article>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 ShapeHub - Projeto acadêmico</p>
+            <p><a href="index.html#inicio">Voltar para a página inicial</a></p>
+        </footer>
+    </div>
+    <script src="js/script.js?v=8"></script>
+</body>
+</html>
+

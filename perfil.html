@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Usuário - ShapeHub</title>
+    <link rel="stylesheet" href="css/style.css?v=9">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="logo" href="index.html#inicio">Shape<span>Hub</span></a>
+            <nav class="nav-links" aria-label="Navegação principal">
+                <a href="index.html#inicio">Início</a>
+                <a href="index.html#treinos">Treinos</a>
+                <a href="index.html#metodo">Método</a>
+                <a href="index.html#montar">Montar treino</a>
+                <a href="meu-treino.html">Meu treino</a>
+                <a href="index.html#planos">Planos</a>
+                <a href="index.html#dicas">Dicas</a>
+            </nav>
+            <div class="header-actions">
+                <a class="btn btn-secondary" href="index.html#montar">Montar treino</a>
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Alternar tema"></button>
+                <a class="profile-avatar-link" href="perfil.html" aria-label="Abrir perfil do usuário">MS</a>
+            </div>
+        </header>
+
+        <main>
+            <section class="profile-section profile-page">
+                <div class="section-heading">
+                    <h1 class="section-title">Perfil completo para uma experiência mais <span>personalizada</span>.</h1>
+                    <p>Uma área dedicada para reunir dados do usuário, objetivo atual e indicadores importantes da rotina.</p>
+                </div>
+                <div class="profile-layout">
+                    <article class="profile-card">
+                        <div class="profile-photo" aria-label="Foto de perfil" data-profile-avatar>MS</div>
+                        <div>
+                            <p class="profile-status">Aluno ativo</p>
+                            <h2 data-profile-name>Micael Santos</h2>
+                            <p data-profile-description>Foco em hipertrofia, rotina de 4 treinos por semana e acompanhamento de evolução mensal.</p>
+                        </div>
+                    </article>
+                    <div class="profile-info-grid">
+                        <article class="profile-info">
+                            <span>Idade</span>
+                            <strong data-profile-age>19 anos</strong>
+                        </article>
+                        <article class="profile-info">
+                            <span>Altura</span>
+                            <strong data-profile-height>1,76 m</strong>
+                        </article>
+                        <article class="profile-info">
+                            <span>Peso</span>
+                            <strong data-profile-weight>72 kg</strong>
+                        </article>
+                        <article class="profile-info">
+                            <span>Perfil</span>
+                            <strong data-profile-type>Retomada</strong>
+                        </article>
+                        <article class="profile-info">
+                            <span>Objetivo</span>
+                            <strong data-profile-goal>Ganhar massa</strong>
+                        </article>
+                        <article class="profile-info">
+                            <span>Disponibilidade</span>
+                            <strong data-profile-availability>45 min por treino</strong>
+                        </article>
+                    </div>
+                    <article class="profile-panel">
+                        <h2>Resumo corporal</h2>
+                        <div class="profile-metric">
+                            <span>IMC estimado</span>
+                            <strong data-profile-bmi>23,2</strong>
+                        </div>
+                        <div class="profile-metric">
+                            <span>Meta inicial</span>
+                            <strong data-profile-target>+3 kg de massa magra</strong>
+                        </div>
+                        <div class="profile-meter" aria-label="Progresso da meta">
+                            <span></span>
+                        </div>
+                        <p>Dados demonstrativos para mostrar como o ShapeHub poderia organizar o perfil e acompanhar o progresso do usuário.</p>
+                        <button class="btn btn-primary" type="button" data-open-profile-modal>Editar Informações</button>
+                    </article>
+                </div>
+                <input class="profile-image-input" id="profileImageInput" type="file" accept="image/*" aria-label="Escolher foto de perfil">
+                <div class="profile-extra-grid">
+                    <article class="profile-panel evolution-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="profile-status">Histórico</p>
+                                <h2>Histórico de evolução</h2>
+                            </div>
+                            <span class="panel-date">Atualizado hoje</span>
+                        </div>
+                        <div class="evolution-grid">
+                            <div class="evolution-item">
+                                <span>Peso inicial</span>
+                                <strong>78 kg</strong>
+                            </div>
+                            <div class="evolution-item">
+                                <span>Peso atual</span>
+                                <strong data-profile-weight>72 kg</strong>
+                            </div>
+                            <div class="evolution-item">
+                                <span>Diferença</span>
+                                <strong>-6 kg</strong>
+                            </div>
+                        </div>
+                        <div class="evolution-line" aria-label="Linha de evolução">
+                            <span></span>
+                        </div>
+                        <p>Use esta área para acompanhar mudanças importantes e perceber se a rotina está funcionando.</p>
+                    </article>
+
+                    <article class="profile-panel goals-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="profile-status">Metas</p>
+                                <h2>Metas do usuário</h2>
+                            </div>
+                            <span class="panel-date" data-goals-count>0/4 feitas</span>
+                        </div>
+                        <div class="goals-list">
+                            <label class="goal-check">
+                                <input type="checkbox" data-goal-check="weekly-training">
+                                <span>Treinar 4x na semana</span>
+                            </label>
+                            <label class="goal-check">
+                                <input type="checkbox" data-goal-check="water">
+                                <span>Beber mais água</span>
+                            </label>
+                            <label class="goal-check">
+                                <input type="checkbox" data-goal-check="sleep">
+                                <span>Dormir melhor</span>
+                            </label>
+                            <label class="goal-check">
+                                <input type="checkbox" data-goal-check="update-profile">
+                                <span>Atualizar peso no perfil</span>
+                            </label>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <div class="modal-overlay" id="profileModal" aria-hidden="true">
+            <div class="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+                <div class="modal-header">
+                    <div>
+                        <p class="eyebrow">Perfil do usuário</p>
+                        <h2 id="profileModalTitle">Editar <span>informações</span></h2>
+                    </div>
+                    <button class="modal-close" type="button" data-close-profile-modal aria-label="Fechar formulário">×</button>
+                </div>
+                <form class="profile-edit-form" id="profileForm">
+                    <p class="helper-text">Preencha seus dados para personalizar o perfil. As informações ficam salvas neste navegador.</p>
+                    <div class="profile-form-grid">
+                        <div class="field">
+                            <label for="profileName">Nome</label>
+                            <input id="profileName" type="text" value="Micael Santos" required>
+                        </div>
+                        <div class="field">
+                            <label for="profileAge">Idade</label>
+                            <input id="profileAge" type="number" value="19" min="10" max="100" required>
+                        </div>
+                        <div class="field">
+                            <label for="profileHeight">Altura em cm</label>
+                            <input id="profileHeight" type="number" value="176" min="120" max="230" required>
+                        </div>
+                        <div class="field">
+                            <label for="profileWeight">Peso em kg</label>
+                            <input id="profileWeight" type="number" value="72" min="30" max="250" required>
+                        </div>
+                        <div class="field">
+                            <label for="profileType">Perfil</label>
+                            <select id="profileType" required>
+                                <option value="Primeiro passo">Primeiro passo</option>
+                                <option value="Retomada" selected>Retomada</option>
+                                <option value="Evolucao constante">Evolução constante</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="profileGoal">Objetivo</label>
+                            <select id="profileGoal" required>
+                                <option value="Ganhar massa" selected>Ganhar massa</option>
+                                <option value="Emagrecer">Emagrecer</option>
+                                <option value="Melhorar condicionamento">Melhorar condicionamento</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="profileAvailability">Disponibilidade</label>
+                            <select id="profileAvailability" required>
+                                <option value="30 min por treino">30 min por treino</option>
+                                <option value="45 min por treino" selected>45 min por treino</option>
+                                <option value="60 min por treino">60 min por treino</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="profileTarget">Meta inicial</label>
+                            <input id="profileTarget" type="text" value="+3 kg de massa magra" required>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" type="button" data-close-profile-modal>Cancelar</button>
+                        <button class="btn btn-primary" type="submit">Salvar perfil</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 ShapeHub - Projeto acadêmico</p>
+            <p><a href="index.html#inicio">Voltar para a página inicial</a></p>
+        </footer>
+    </div>
+    <button class="back-to-top" type="button" data-back-to-top onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Voltar ao início">↑</button>
+    <script src="js/script.js?v=8"></script>
+</body>
+</html>
+

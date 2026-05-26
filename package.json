@@ -1,0 +1,12 @@
+{
+  "name": "shapehub",
+  "version": "1.0.0",
+  "description": "ShapeHub com frontend estático e backend simples em Node.js.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
