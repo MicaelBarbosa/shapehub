@@ -1408,6 +1408,7 @@
         }
 
         .login-tabs {
+            position: relative;
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 8px;
@@ -1416,9 +1417,33 @@
             border: 1px solid var(--line);
             border-radius: 8px;
             background: var(--surface-2);
+            overflow: hidden;
+        }
+
+        .login-tabs::before {
+            content: "";
+            position: absolute;
+            inset: 6px auto 6px 6px;
+            z-index: 0;
+            width: calc((100% - 20px) / 2);
+            border-radius: 6px;
+            background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+            box-shadow: 0 10px 24px rgba(255, 159, 47, 0.18);
+            transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, filter 0.2s ease;
+        }
+
+        .login-tabs.is-register::before {
+            transform: translateX(calc(100% + 8px));
+        }
+
+        .login-tabs:hover::before {
+            filter: brightness(1.08);
+            box-shadow: 0 14px 30px rgba(255, 159, 47, 0.26);
         }
 
         .login-tabs button {
+            position: relative;
+            z-index: 1;
             min-height: 40px;
             border: 0;
             border-radius: 6px;
@@ -1426,19 +1451,15 @@
             color: var(--muted);
             cursor: pointer;
             font-weight: 800;
+            transition: color 0.22s ease, transform 0.2s ease;
         }
 
         .login-tabs button.active {
-            background: linear-gradient(135deg, var(--orange), var(--orange-deep));
             color: #ffffff;
-            box-shadow: 0 10px 24px rgba(255, 159, 47, 0.18);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
         }
 
         .login-tabs button.active:hover {
             transform: translateY(-1px);
-            filter: brightness(1.1);
-            box-shadow: 0 14px 30px rgba(255, 159, 47, 0.28);
         }
 
         .auth-form {

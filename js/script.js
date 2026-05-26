@@ -450,6 +450,7 @@ function setupScrollEffects() {
 
 function setupAuthPage() {
     const authForm = document.getElementById("authForm");
+    const authTabsWrapper = document.querySelector(".login-tabs");
     const authTabs = document.querySelectorAll("[data-auth-tab]");
     const authName = document.getElementById("authName");
     const authNameField = document.querySelector(".auth-name-field");
@@ -469,6 +470,10 @@ function setupAuthPage() {
         authTabs.forEach(function(tab) {
             tab.classList.toggle("active", tab.dataset.authTab === mode);
         });
+
+        if (authTabsWrapper) {
+            authTabsWrapper.classList.toggle("is-register", mode === "register");
+        }
 
         if (authNameField) {
             authNameField.classList.add("is-visible");
