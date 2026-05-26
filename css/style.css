@@ -1629,19 +1629,91 @@
 
         @media (max-width: 640px) {
             .site-header {
+                gap: 12px;
                 padding: 16px;
+            }
+
+            .logo {
+                font-size: 1.28rem;
+            }
+
+            .nav-links {
+                gap: 6px;
+                margin-inline: -4px;
+                padding-inline: 4px;
+                scrollbar-width: none;
+            }
+
+            .nav-links::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-links a {
+                min-height: 32px;
+                padding: 0 9px;
+                font-size: 0.88rem;
             }
 
             .header-actions {
                 width: 100%;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .auth-header .header-actions {
+                width: auto;
+                margin-left: auto;
             }
 
             .header-actions .btn {
                 flex: 1;
             }
 
+            .welcome-message {
+                width: 100%;
+                justify-content: center;
+                white-space: normal;
+                text-align: center;
+            }
+
             .profile-avatar-link {
                 margin-left: auto;
+            }
+
+            section,
+            .hero {
+                padding: 42px 16px;
+            }
+
+            h1,
+            .login-intro h1 {
+                font-size: clamp(2rem, 11vw, 2.65rem);
+                line-height: 1.02;
+            }
+
+            .section-title {
+                font-size: clamp(1.75rem, 9vw, 2.35rem);
+            }
+
+            .hero-copy,
+            .login-intro p:not(.eyebrow) {
+                font-size: 1rem;
+            }
+
+            .hero-actions,
+            .result-actions,
+            .modal-actions {
+                display: grid;
+            }
+
+            .hero-actions .btn,
+            .dashboard-card .btn,
+            .plan .btn,
+            .empty-workout .btn,
+            .saved-workout-title .btn,
+            .result-actions .btn,
+            .modal-actions .btn {
+                width: 100%;
             }
 
             .hero-stats,
@@ -1667,8 +1739,82 @@
                 min-height: 360px;
             }
 
+            .training-card {
+                right: 12px;
+                bottom: 12px;
+                width: calc(100% - 24px);
+                padding: 14px;
+            }
+
+            .training-row {
+                display: grid;
+                gap: 2px;
+            }
+
+            .about-main,
+            .about-card,
+            .builder-panel,
+            .profile-card,
+            .profile-panel,
+            .login-card,
+            .saved-workout-header,
+            .empty-workout {
+                padding: 18px;
+            }
+
+            .panel-heading,
+            .saved-workout-title {
+                display: grid;
+            }
+
+            .panel-date {
+                white-space: normal;
+            }
+
+            .login-page {
+                align-items: start;
+                min-height: auto;
+            }
+
+            .login-tabs {
+                gap: 6px;
+            }
+
+            .login-tabs::before {
+                width: calc((100% - 18px) / 2);
+            }
+
+            .login-tabs.is-register::before {
+                transform: translateX(calc(100% + 6px));
+            }
+
+            .login-benefits span {
+                flex: 1 1 150px;
+                justify-content: center;
+            }
+
+            .profile-card {
+                justify-items: center;
+                text-align: center;
+            }
+
+            .profile-status {
+                margin-inline: auto;
+            }
+
+            .profile-info {
+                padding: 16px;
+            }
+
+            .modal-header,
+            .profile-modal .profile-edit-form {
+                padding: 18px;
+            }
+
             footer {
-                display: block;
+                display: grid;
+                gap: 8px;
+                padding: 22px 16px;
             }
 
             .about-card .method-icon,
