@@ -1408,13 +1408,13 @@
             padding: clamp(58px, 8vw, 96px) clamp(18px, 5vw, 72px);
             background:
                 linear-gradient(90deg, rgba(8, 9, 9, 0.96), rgba(8, 9, 9, 0.58)),
-                url("https://images.unsplash.com/photo-1571019613914-85f342c6a11e?auto=format&fit=crop&w=1400&q=85") center/cover;
+                url("https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1400&q=85") center/cover;
         }
 
         body.light-theme .welcome-gate {
             background:
                 linear-gradient(90deg, rgba(245, 247, 245, 0.96), rgba(245, 247, 245, 0.64)),
-                url("https://images.unsplash.com/photo-1571019613914-85f342c6a11e?auto=format&fit=crop&w=1400&q=85") center/cover;
+                url("https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1400&q=85") center/cover;
         }
 
         .welcome-gate-content {
