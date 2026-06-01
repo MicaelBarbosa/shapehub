@@ -450,6 +450,8 @@ function setupScrollEffects() {
 
 function setupAuthPage() {
     const authForm = document.getElementById("authForm");
+    const authWelcome = document.querySelector("[data-auth-welcome]");
+    const authWelcomeButton = document.querySelector("[data-enter-login]");
     const authTabsWrapper = document.querySelector(".login-tabs");
     const authTabs = document.querySelectorAll("[data-auth-tab]");
     const authName = document.getElementById("authName");
@@ -462,6 +464,31 @@ function setupAuthPage() {
 
     if (!authForm) {
         return;
+    }
+
+    if (authWelcome) {
+        const hasActiveSession = Boolean(getSavedAuthUser()) && sessionStorage.getItem("shapehubSessionActive") === "true";
+
+        if (hasActiveSession) {
+            authWelcome.hidden = true;
+            document.body.classList.remove("auth-welcome-active");
+            document.body.classList.add("auth-login-ready");
+        } else {
+            document.body.classList.add("auth-welcome-active");
+            document.body.classList.remove("auth-login-ready");
+        }
+
+        if (authWelcomeButton) {
+            authWelcomeButton.addEventListener("click", function() {
+                authWelcome.classList.add("is-leaving");
+
+                window.setTimeout(function() {
+                    authWelcome.hidden = true;
+                    document.body.classList.remove("auth-welcome-active");
+                    document.body.classList.add("auth-login-ready");
+                }, 320);
+            });
+        }
     }
 
     function setMode(nextMode) {

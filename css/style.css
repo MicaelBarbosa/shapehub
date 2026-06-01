@@ -1401,6 +1401,93 @@
             color: var(--text);
         }
 
+        .welcome-gate {
+            display: grid;
+            align-items: center;
+            min-height: calc(100vh - 160px);
+            padding: clamp(58px, 8vw, 96px) clamp(18px, 5vw, 72px);
+            background:
+                linear-gradient(90deg, rgba(8, 9, 9, 0.96), rgba(8, 9, 9, 0.58)),
+                url("https://images.unsplash.com/photo-1571019613914-85f342c6a11e?auto=format&fit=crop&w=1400&q=85") center/cover;
+        }
+
+        body.light-theme .welcome-gate {
+            background:
+                linear-gradient(90deg, rgba(245, 247, 245, 0.96), rgba(245, 247, 245, 0.64)),
+                url("https://images.unsplash.com/photo-1571019613914-85f342c6a11e?auto=format&fit=crop&w=1400&q=85") center/cover;
+        }
+
+        .welcome-gate-content {
+            display: grid;
+            justify-items: start;
+            gap: 18px;
+            max-width: 680px;
+            animation: welcomeEnter 0.42s ease both;
+        }
+
+        .welcome-gate h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            line-height: 0.98;
+        }
+
+        .welcome-gate p:not(.eyebrow) {
+            max-width: 560px;
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        .welcome-gate.is-leaving {
+            animation: welcomeLeave 0.32s ease both;
+        }
+
+        body.auth-welcome-active .login-page {
+            display: none;
+        }
+
+        body:not(.auth-welcome-active) .welcome-gate {
+            display: none;
+        }
+
+        body.auth-login-ready .login-page {
+            animation: loginReveal 0.48s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        @keyframes welcomeEnter {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes welcomeLeave {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.99);
+            }
+        }
+
+        @keyframes loginReveal {
+            from {
+                opacity: 0;
+                transform: translateY(18px) scale(0.992);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         .login-page {
             display: grid;
             grid-template-columns: minmax(300px, 1fr) minmax(320px, 0.82fr);
@@ -1829,6 +1916,19 @@
             .login-page {
                 align-items: start;
                 min-height: auto;
+            }
+
+            .welcome-gate {
+                min-height: calc(100vh - 132px);
+                padding: 42px 16px;
+            }
+
+            .welcome-gate h1 {
+                font-size: clamp(2rem, 11vw, 2.75rem);
+            }
+
+            .welcome-gate .btn {
+                width: 100%;
             }
 
             .login-tabs {
