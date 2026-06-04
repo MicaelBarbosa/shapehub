@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 4173;
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, "data");
 const DB_FILE = path.join(DATA_DIR, "db.json");
+const SITE_OFFLINE = true;
 
 const mimeTypes = {
     ".css": "text/css; charset=utf-8",
@@ -51,6 +52,55 @@ function sendJson(response, statusCode, payload) {
         "Cache-Control": "no-store"
     });
     response.end(JSON.stringify(payload));
+}
+
+function sendOffline(response) {
+    response.writeHead(410, {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store"
+    });
+    response.end(`<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShapeHub fora do ar</title>
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            background: #080909;
+            color: #f7f7f2;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        main {
+            width: min(560px, calc(100% - 32px));
+        }
+
+        h1 {
+            margin: 0 0 12px;
+            color: #ff9f2f;
+            font-size: clamp(2rem, 8vw, 4rem);
+        }
+
+        p {
+            margin: 0;
+            color: #a7afaa;
+            font-size: 1.05rem;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>ShapeHub fora do ar</h1>
+        <p>Este site foi retirado do ar pelo responsável do projeto.</p>
+    </main>
+</body>
+</html>`);
 }
 
 function readJsonBody(request) {
@@ -203,6 +253,11 @@ function serveStatic(request, response, pathname) {
 }
 
 const server = http.createServer((request, response) => {
+    if (SITE_OFFLINE) {
+        sendOffline(response);
+        return;
+    }
+
     const url = new URL(request.url, `http://${request.headers.host}`);
 
     if (url.pathname.startsWith("/api/")) {
