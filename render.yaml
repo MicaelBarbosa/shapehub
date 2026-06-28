@@ -17,4 +17,5 @@ databases:
   - name: shapehub-db
     plan: free
     databaseName: shapehub
-    user: shapehub
+    user: shapehub_app
+    ipAllowList: []
