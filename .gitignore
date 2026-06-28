@@ -1,6 +1,7 @@
 node_modules/
 npm-debug.log*
 .env
+*.zip
 .DS_Store
 Thumbs.db
 data/db.json

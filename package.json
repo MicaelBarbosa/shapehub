@@ -1,10 +1,14 @@
 {
   "name": "shapehub",
   "version": "1.0.0",
-  "description": "ShapeHub com frontend estático e backend simples em Node.js.",
+  "description": "ShapeHub com frontend responsivo, backend Node.js e PostgreSQL.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js && node --check database.js && node --check password.js && node --check js/script.js"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
   },
   "engines": {
     "node": ">=18"

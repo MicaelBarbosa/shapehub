@@ -3,5 +3,18 @@ services:
     name: shapehub
     runtime: node
     plan: free
-    buildCommand: ""
+    buildCommand: "npm install --omit=dev"
     startCommand: "npm start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: shapehub-db
+          property: connectionString
+
+databases:
+  - name: shapehub-db
+    plan: free
+    databaseName: shapehub
+    user: shapehub

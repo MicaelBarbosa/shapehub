@@ -3,11 +3,27 @@ const fs = require("fs");
 const http = require("http");
 const path = require("path");
 const { URL } = require("url");
+const {
+    authenticateUser,
+    checkDatabase,
+    createUser,
+    findUserByEmail,
+    initializeDatabase,
+    updateUserName
+} = require("./database");
 
 const PORT = process.env.PORT || 4173;
 const ROOT = __dirname;
-const DATA_DIR = path.join(ROOT, "data");
-const DB_FILE = path.join(DATA_DIR, "db.json");
+const AUTH_WINDOW_MS = 15 * 60 * 1000;
+const AUTH_ATTEMPT_LIMIT = 10;
+const authAttempts = new Map();
+const securityHeaders = {
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data: https://images.unsplash.com; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY"
+};
 
 const mimeTypes = {
     ".css": "text/css; charset=utf-8",
@@ -21,36 +37,54 @@ const mimeTypes = {
     ".webp": "image/webp"
 };
 
-function ensureDatabase() {
-    if (!fs.existsSync(DATA_DIR)) {
-        fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
-
-    if (!fs.existsSync(DB_FILE)) {
-        fs.writeFileSync(DB_FILE, JSON.stringify({ users: [] }, null, 2));
-    }
-}
-
-function readDatabase() {
-    ensureDatabase();
-    return JSON.parse(fs.readFileSync(DB_FILE, "utf8"));
-}
-
-function writeDatabase(database) {
-    ensureDatabase();
-    fs.writeFileSync(DB_FILE, JSON.stringify(database, null, 2));
-}
-
-function hashPassword(password) {
-    return crypto.createHash("sha256").update(String(password)).digest("hex");
-}
-
 function sendJson(response, statusCode, payload) {
     response.writeHead(statusCode, {
+        ...securityHeaders,
         "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "no-store"
+        "Cache-Control": "no-store",
+        "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'"
     });
     response.end(JSON.stringify(payload));
+}
+
+function getClientAddress(request) {
+    const forwarded = String(request.headers["x-forwarded-for"] || "").split(",")[0].trim();
+
+    return forwarded || request.socket.remoteAddress || "unknown";
+}
+
+function consumeAuthAttempt(request, response) {
+    const key = getClientAddress(request);
+    const now = Date.now();
+    const entry = authAttempts.get(key);
+
+    if (authAttempts.size > 10_000) {
+        for (const [storedKey, storedEntry] of authAttempts) {
+            if (now - storedEntry.startedAt >= AUTH_WINDOW_MS) {
+                authAttempts.delete(storedKey);
+            }
+        }
+    }
+
+    if (!entry || now - entry.startedAt >= AUTH_WINDOW_MS) {
+        authAttempts.set(key, { count: 1, startedAt: now });
+        return true;
+    }
+
+    if (entry.count >= AUTH_ATTEMPT_LIMIT) {
+        const retryAfter = Math.ceil((AUTH_WINDOW_MS - (now - entry.startedAt)) / 1000);
+
+        response.setHeader("Retry-After", String(retryAfter));
+        sendJson(response, 429, { ok: false, message: "Muitas tentativas. Aguarde alguns minutos e tente novamente." });
+        return false;
+    }
+
+    entry.count += 1;
+    return true;
+}
+
+function clearAuthAttempts(request) {
+    authAttempts.delete(getClientAddress(request));
 }
 
 function readJsonBody(request) {
@@ -86,12 +120,17 @@ function publicUser(user) {
 
 async function handleApi(request, response, pathname) {
     if (request.method === "GET" && pathname === "/api/health") {
-        sendJson(response, 200, { ok: true, app: "ShapeHub" });
+        await checkDatabase();
+        sendJson(response, 200, { ok: true, app: "ShapeHub", database: "postgresql" });
         return;
     }
 
     if (request.method !== "POST") {
         sendJson(response, 405, { ok: false, message: "Método não permitido." });
+        return;
+    }
+
+    if (!consumeAuthAttempt(request, response)) {
         return;
     }
 
@@ -108,13 +147,16 @@ async function handleApi(request, response, pathname) {
     const email = String(body.email || "").trim().toLowerCase();
     const password = String(body.password || "");
 
-    if (!email || !password || (pathname === "/api/register" && !name)) {
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const validName = name.length >= 2 && name.length <= 120;
+    const validPassword = password.length >= 8 && password.length <= 128;
+
+    if (!validEmail || email.length > 320 || !validPassword || (pathname === "/api/register" && !validName)) {
         sendJson(response, 400, { ok: false, message: "Preencha nome, e-mail e senha corretamente." });
         return;
     }
 
-    const database = readDatabase();
-    const existingUser = database.users.find((user) => user.email === email);
+    const existingUser = await findUserByEmail(email);
 
     if (pathname === "/api/register") {
         if (existingUser) {
@@ -122,16 +164,25 @@ async function handleApi(request, response, pathname) {
             return;
         }
 
-        const user = {
-            id: crypto.randomUUID(),
-            name,
-            email,
-            passwordHash: hashPassword(password),
-            createdAt: new Date().toISOString()
-        };
+        let user;
 
-        database.users.push(user);
-        writeDatabase(database);
+        try {
+            user = await createUser({
+                id: crypto.randomUUID(),
+                name,
+                email,
+                password
+            });
+        } catch (error) {
+            if (error.code === "23505") {
+                sendJson(response, 409, { ok: false, message: "Já existe uma conta com esse e-mail." });
+                return;
+            }
+
+            throw error;
+        }
+
+        clearAuthAttempts(request);
         sendJson(response, 201, { ok: true, user: publicUser(user) });
         return;
     }
@@ -142,16 +193,21 @@ async function handleApi(request, response, pathname) {
             return;
         }
 
-        if (existingUser.passwordHash !== hashPassword(password)) {
+        if (!(await authenticateUser(existingUser, password))) {
             sendJson(response, 401, { ok: false, message: "Senha incorreta. Tente novamente." });
             return;
         }
 
         if (name && existingUser.name !== name) {
-            existingUser.name = name;
-            writeDatabase(database);
+            if (!validName) {
+                sendJson(response, 400, { ok: false, message: "Informe um nome válido." });
+                return;
+            }
+
+            Object.assign(existingUser, await updateUserName(existingUser.id, name));
         }
 
+        clearAuthAttempts(request);
         sendJson(response, 200, { ok: true, user: publicUser(existingUser) });
         return;
     }
@@ -180,6 +236,7 @@ function serveStatic(request, response, pathname) {
                     }
 
                     response.writeHead(200, {
+                        ...securityHeaders,
                         "Content-Type": mimeTypes[".html"],
                         "Cache-Control": "no-store"
                     });
@@ -195,6 +252,7 @@ function serveStatic(request, response, pathname) {
 
         const extension = path.extname(filePath).toLowerCase();
         response.writeHead(200, {
+            ...securityHeaders,
             "Content-Type": mimeTypes[extension] || "application/octet-stream",
             "Cache-Control": extension === ".html" ? "no-store" : "public, max-age=3600"
         });
@@ -206,7 +264,8 @@ const server = http.createServer((request, response) => {
     const url = new URL(request.url, `http://${request.headers.host}`);
 
     if (url.pathname.startsWith("/api/")) {
-        handleApi(request, response, url.pathname).catch(() => {
+        handleApi(request, response, url.pathname).catch((error) => {
+            console.error("Erro na API:", error.message);
             sendJson(response, 500, { ok: false, message: "Erro interno no servidor." });
         });
         return;
@@ -215,6 +274,13 @@ const server = http.createServer((request, response) => {
     serveStatic(request, response, decodeURIComponent(url.pathname));
 });
 
-server.listen(PORT, () => {
-    console.log(`ShapeHub rodando em http://localhost:${PORT}`);
-});
+initializeDatabase()
+    .then(() => {
+        server.listen(PORT, () => {
+            console.log(`ShapeHub rodando em http://localhost:${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error("Não foi possível iniciar o banco PostgreSQL:", error.message);
+        process.exit(1);
+    });

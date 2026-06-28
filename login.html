@@ -46,15 +46,15 @@
                     <form class="auth-form" id="authForm">
                         <div class="field auth-name-field">
                             <label for="authName">Nome</label>
-                            <input id="authName" type="text" placeholder="Seu nome" autocomplete="name" required>
+                            <input id="authName" type="text" placeholder="Seu nome" autocomplete="name" minlength="2" maxlength="120" required>
                         </div>
                         <div class="field">
                             <label for="authEmail">E-mail</label>
-                            <input id="authEmail" type="email" placeholder="voce@email.com" autocomplete="email" required>
+                            <input id="authEmail" type="email" placeholder="voce@email.com" autocomplete="email" maxlength="320" required>
                         </div>
                         <div class="field">
                             <label for="authPassword">Senha</label>
-                            <input id="authPassword" type="password" placeholder="Digite sua senha" autocomplete="current-password" required>
+                            <input id="authPassword" type="password" placeholder="Mínimo de 8 caracteres" autocomplete="current-password" minlength="8" maxlength="128" required>
                         </div>
                         <p class="auth-message" id="authMessage">Use qualquer e-mail e senha para simular o acesso.</p>
                         <button class="btn btn-primary" type="submit" id="authSubmit">Entrar</button>
