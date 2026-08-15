@@ -1,56 +1,72 @@
-const fs = require("fs");
+const fs = require("fs/promises");
 const path = require("path");
-const { Pool } = require("pg");
 const { hashPassword, verifyPassword } = require("./password");
-const connectionString = process.env.DATABASE_URL;
 
-if (!connectionString) {
-    throw new Error("DATABASE_URL não foi configurada.");
-}
-
-const pool = new Pool({
-    connectionString,
-    max: 5,
-    idleTimeoutMillis: 30_000,
-    connectionTimeoutMillis: 10_000
-});
-
-pool.on("error", (error) => {
-    console.error("Erro inesperado no pool PostgreSQL:", error.message);
-});
+const DATA_DIR = path.join(__dirname, "data");
+const DB_PATH = path.join(DATA_DIR, "db.json");
+const emptyDatabase = { users: [] };
+let writeQueue = Promise.resolve();
 
 async function initializeDatabase() {
-    const migration = fs.readFileSync(path.join(__dirname, "migrations", "001_create_users.sql"), "utf8");
+    await fs.mkdir(DATA_DIR, { recursive: true });
 
-    await pool.query(migration);
+    try {
+        await fs.access(DB_PATH);
+    } catch (error) {
+        await saveDatabase(emptyDatabase);
+    }
+}
+
+async function readDatabase() {
+    await initializeDatabase();
+
+    const content = await fs.readFile(DB_PATH, "utf8");
+    const database = JSON.parse(content || "{}");
+
+    if (!Array.isArray(database.users)) {
+        return { users: [] };
+    }
+
+    return database;
+}
+
+async function saveDatabase(database) {
+    writeQueue = writeQueue.then(() => fs.writeFile(DB_PATH, JSON.stringify(database, null, 2)));
+    return writeQueue;
 }
 
 async function checkDatabase() {
-    await pool.query("SELECT 1");
+    await readDatabase();
 }
 
 async function findUserByEmail(email) {
-    const result = await pool.query(
-        `SELECT id, name, email, password_hash, created_at
-         FROM users
-         WHERE email = $1
-         LIMIT 1`,
-        [email]
-    );
+    const database = await readDatabase();
 
-    return result.rows[0] || null;
+    return database.users.find((user) => user.email === email) || null;
 }
 
 async function createUser({ id, name, email, password }) {
-    const passwordHash = await hashPassword(password);
-    const result = await pool.query(
-        `INSERT INTO users (id, name, email, password_hash)
-         VALUES ($1, $2, $3, $4)
-         RETURNING id, name, email, created_at`,
-        [id, name, email, passwordHash]
-    );
+    const database = await readDatabase();
 
-    return result.rows[0];
+    if (database.users.some((user) => user.email === email)) {
+        const error = new Error("E-mail já cadastrado.");
+        error.code = "USER_EXISTS";
+        throw error;
+    }
+
+    const user = {
+        id,
+        name,
+        email,
+        password_hash: await hashPassword(password),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+    };
+
+    database.users.push(user);
+    await saveDatabase(database);
+
+    return user;
 }
 
 async function authenticateUser(user, password) {
@@ -58,15 +74,18 @@ async function authenticateUser(user, password) {
 }
 
 async function updateUserName(id, name) {
-    const result = await pool.query(
-        `UPDATE users
-         SET name = $1, updated_at = NOW()
-         WHERE id = $2
-         RETURNING id, name, email`,
-        [name, id]
-    );
+    const database = await readDatabase();
+    const user = database.users.find((currentUser) => currentUser.id === id);
 
-    return result.rows[0];
+    if (!user) {
+        return null;
+    }
+
+    user.name = name;
+    user.updated_at = new Date().toISOString();
+    await saveDatabase(database);
+
+    return user;
 }
 
 module.exports = {

@@ -121,7 +121,7 @@ function publicUser(user) {
 async function handleApi(request, response, pathname) {
     if (request.method === "GET" && pathname === "/api/health") {
         await checkDatabase();
-        sendJson(response, 200, { ok: true, app: "ShapeHub", database: "postgresql" });
+        sendJson(response, 200, { ok: true, app: "ShapeHub", database: "json" });
         return;
     }
 
@@ -174,7 +174,7 @@ async function handleApi(request, response, pathname) {
                 password
             });
         } catch (error) {
-            if (error.code === "23505") {
+            if (error.code === "USER_EXISTS") {
                 sendJson(response, 409, { ok: false, message: "Já existe uma conta com esse e-mail." });
                 return;
             }
@@ -281,6 +281,6 @@ initializeDatabase()
         });
     })
     .catch((error) => {
-        console.error("Não foi possível iniciar o banco PostgreSQL:", error.message);
+        console.error("Não foi possível iniciar o banco JSON:", error.message);
         process.exit(1);
     });

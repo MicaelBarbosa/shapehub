@@ -1,6 +1,6 @@
 # ShapeHub
 
-Site acadêmico de treinos personalizados, com frontend responsivo, simulador de sugestão de treino e backend em Node.js com PostgreSQL.
+Site acadêmico de treinos personalizados, com frontend responsivo, simulador de sugestão de treino e backend em Node.js com banco JSON simples.
 
 ## Estrutura
 
@@ -11,15 +11,16 @@ Site acadêmico de treinos personalizados, com frontend responsivo, simulador de
 - `css/style.css`: estilos, responsividade e identidade visual.
 - `js/script.js`: interações, botões e gerador de treino.
 - `server.js`: backend Node.js e servidor dos arquivos do site.
-- `database.js`: conexão segura e consultas parametrizadas ao PostgreSQL.
-- `migrations/`: estrutura SQL criada automaticamente no banco.
+- `database.js`: leitura e gravação dos usuários no arquivo JSON local.
+- `data/db.json`: arquivo criado automaticamente para guardar os usuários cadastrados.
 - `render.yaml`: configuração para deploy gratuito no Render.
 
 ## Como abrir
 
-Configure a variável `DATABASE_URL` com a conexão PostgreSQL e execute:
+Instale as dependências e execute:
 
 ```bash
+npm install
 npm start
 ```
 
@@ -36,7 +37,7 @@ Opção recomendada: Render.
 1. Suba esta pasta para um repositório no GitHub.
 2. Acesse `https://render.com`.
 3. Crie um Blueprint usando o `render.yaml` do repositório.
-4. O Render criará o Web Service, o PostgreSQL e a variável `DATABASE_URL`.
+4. O Render criará o Web Service e publicará o site.
 5. O Render vai gerar um link grátis parecido com:
 
 ```text
@@ -48,7 +49,9 @@ Esse link pode ser enviado para outras pessoas acessarem o site.
 ## Segurança
 
 - Senhas protegidas com `scrypt` e salt aleatório.
-- Consultas PostgreSQL parametrizadas.
+- Banco JSON simples, ideal para apresentação acadêmica e protótipo.
 - Limite de tentativas nas rotas de autenticação.
 - Validação de nome, e-mail e senha.
 - Cabeçalhos HTTP contra carregamento indevido e enquadramento por terceiros.
+
+> Observação: por ser um arquivo JSON simples, os cadastros podem ser apagados em redeploys ou reinícios no Render gratuito. Para produção real, o ideal é usar PostgreSQL ou outro banco persistente.
